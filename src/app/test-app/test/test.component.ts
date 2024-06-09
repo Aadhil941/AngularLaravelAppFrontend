@@ -19,7 +19,7 @@ export class TestComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getData();
+    // this.getData();
   }
 
   getData(): void {
