@@ -9,15 +9,15 @@ pipeline {
     }
 
     stages {
-        stage('Install Node.js') {
-            steps {
-                script {
-                    // Install Node.js version defined in the environment variable
-                    def nodeHome = tool name: 'NodeJS', type: 'NodeJSInstallation'
-                    env.PATH = "${nodeHome}/bin:${env.PATH}"
-                }
-            }
-        }
+        // stage('Install Node.js') {
+        //     steps {
+        //         script {
+        //             // Install Node.js version defined in the environment variable
+        //             def nodeHome = tool name: 'NodeJS', type: 'NodeJSInstallation'
+        //             env.PATH = "${nodeHome}/bin:${env.PATH}"
+        //         }
+        //     }
+        // }
 
         stage('Checkout Code') {
             steps {
