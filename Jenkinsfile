@@ -13,7 +13,7 @@ pipeline {
             steps {
                 script {
                     // Install Node.js version defined in the environment variable
-                    def nodeHome = tool name: 'Node20', type: 'NodeJSInstallation'
+                    def nodeHome = tool name: 'Node20', type: 'NodeJS installations'
                     env.PATH = "${nodeHome}/bin:${env.PATH}"
                 }
             }
