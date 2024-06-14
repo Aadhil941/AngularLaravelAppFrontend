@@ -1,65 +1,24 @@
 pipeline {
     agent any
-
-    environment {
-        // Define environment variables
-        NODE_VERSION = '20.14.0'
-        S3_BUCKET = 'aadhil-web'
-        AWS_REGION = 'us-east-1'
-    }
-
     stages {
-        stage('Install Node.js') {
+        stage('Build') {
             steps {
-                script {
-                    // Install Node.js version defined in the environment variable
-                    def nodeHome = tool name: 'NodeJS', type: 'NodeJSInstallation'
-                    env.PATH = "${nodeHome}/bin:${env.PATH}"
-                }
-            }
-        }
-
-        stage('Checkout Code') {
-            steps {
-                // Checkout code from your version control
-                checkout scm
-            }
-        }
-
-        stage('Install Dependencies') {
-            steps {
-                // Install project dependencies
+                sh 'ls'
                 sh 'npm install'
+                sh 'echo N | ng analytics off'
+                sh 'ng build'
+                sh 'ls'
+                sh 'cd dist && ls'
+                sh 'cd dist/my-first-project/browser && ls'
             }
         }
-
-        stage('Build Project') {
+        stage('S3 Upload') {
             steps {
-                // Build the Angular project
-                sh 'npm run build --prod'
-            }
-        }
-
-        stage('Upload to S3') {
-            steps {
-                script {
-                    // Define the build directory (this can vary based on your Angular configuration)
-                    def buildDir = 'dist/my-first-project/browser'
-                    // Upload the build files to S3
-                    sh """
-                        aws s3 sync ${buildDir} s3://${S3_BUCKET} --region ${AWS_REGION}
-                    """
+                withAWS(region: 'us-east-1', credentials: '1c5644eb-96aa-4963-a678-82878015799e') {
+                    sh 'ls -la'
+                    sh 'aws s3 cp dist/my-first-project/browser/. s3://aadhil-web/ --recursive'
                 }
             }
-        }
-    }
-
-    post {
-        success {
-            echo 'Build and deployment to S3 successful!'
-        }
-        failure {
-            echo 'Build or deployment failed.'
         }
     }
 }
