@@ -1,9 +1,14 @@
 pipeline {
     agent any
+
+    // tools {nodejs "node"}
+
     stages {
         stage('Build') {
             steps {
                 sh 'ls'
+                sh 'npm -v'
+                sh 'node -v'
                 sh 'npm install'
                 sh 'echo N | ng analytics off'
                 sh 'ng build'
