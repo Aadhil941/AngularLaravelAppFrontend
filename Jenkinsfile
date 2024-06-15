@@ -10,7 +10,7 @@ pipeline {
                 sh 'npm -v'
                 sh 'node -v'
                 sh 'npm install'
-                sh 'echo N | ng analytics off'
+                // sh 'echo N | ng analytics off'
                 sh 'ng build'
                 sh 'ls'
                 sh 'cd dist && ls'
