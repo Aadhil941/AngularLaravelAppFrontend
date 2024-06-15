@@ -9,9 +9,6 @@ pipeline {
                 sh 'ls'
                 sh 'npm -v'
                 sh 'node -v'
-                sh "chown -R jenkins:jenkins /root/.nvm"
-                sh "chmod -R 755 /root/.nvm"
-                sh "chmod +x -R /root/"
                 sh 'npm install'
                 // sh 'echo N | ng analytics off'
                 sh 'ng build'
