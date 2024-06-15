@@ -1,11 +1,6 @@
 pipeline {
     agent any
 
-    environment {
-        NVM_DIR = "$HOME/.nvm"
-        PATH = "$NVM_DIR/versions/node/v22.2.0/bin:$PATH"
-    }
-
     tools {nodejs "node"}
 
     stages {
@@ -15,11 +10,8 @@ pipeline {
                 sh 'npm -v'
                 sh 'node -v'
                 sh 'npm install'
-                sh '[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
-                    nvm use 22.2.0 # Use the correct Node.js version
-                    ng build # Run your ng command'
                 // sh 'echo N | ng analytics off'
-                // sh 'ng build'
+                sh 'ng build'
                 sh 'ls'
                 sh 'cd dist && ls'
                 sh 'cd dist/my-first-project/browser && ls'
